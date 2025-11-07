@@ -1,0 +1,40 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "config",
+      "camelcase": "Config",
+      "title": "Config",
+      "scope": "source.config",
+      "file-types": [
+        ".nc"
+      ],
+      "injection-regex": "^config$",
+      "class-name": "TreeSitterConfig"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "Apache-2.0",
+    "description": "Config grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "IrisuCh",
+        "email": "myirisuchan@gmail.com",
+        "url": "https://github.com/IrisuCh"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/Nethalym/tree-sitter-config"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
