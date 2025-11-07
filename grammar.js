@@ -9,9 +9,15 @@
 
 module.exports = grammar({
   name: "config",
+  extras: ($) => [/[\s\t\r\n]/, $.single_line_comment, $.multi_line_comment],
 
   rules: {
     source_file: ($) => repeat1($.section),
+
+    single_line_comment: ($) => token(seq("#", /.*/)),
+
+    multi_line_comment: ($) =>
+      token(seq("##", repeat(choice(/[^#]+/, /#[^#]/, /##/)), "##")),
 
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
@@ -19,7 +25,8 @@ module.exports = grammar({
     string: ($) => /"[^"]*"/,
     string_or_lkey: ($) => choice($.localization_key, $.string),
     enum: ($) => $.identifier,
-    enum_with_block: ($) => seq($.identifier, "{", repeat1($.field), "}"),
+    enum_with_block: ($) =>
+      seq(field("name", $.identifier), "{", repeat1($.field), "}"),
     integer: ($) => /-?[0-9]+/,
     float: ($) => /-?[0-9]+\.[0-9]*/,
     boolean: ($) => choice("true", "false"),
@@ -37,13 +44,10 @@ module.exports = grammar({
 
     meta_field: ($) =>
       seq(
-        "@",
+        alias("@", $.meta_field_keyword),
         field("name", $.identifier),
         ":",
-        field(
-          "type",
-          choice($.string_or_lkey, $.types, $.enum, $.enum_with_block),
-        ),
+        field("type", choice($.enum_with_block, $.values)),
       ),
 
     field: ($) =>
@@ -51,10 +55,10 @@ module.exports = grammar({
 
     option: ($) =>
       seq(
-        "option",
-        $.identifier,
+        alias("option", $.option_keyword),
+        field("name", $.identifier),
         ":",
-        $.types,
+        field("type", $.types),
         "{",
         repeat1(choice($.meta_field, $.field)),
         "}",
@@ -62,7 +66,7 @@ module.exports = grammar({
 
     section: ($) =>
       seq(
-        "section",
+        alias("section", $.section_keyword),
         field("name", $.identifier),
         optional(
           seq("{", repeat1(choice($.meta_field, $.option, $.section)), "}"),

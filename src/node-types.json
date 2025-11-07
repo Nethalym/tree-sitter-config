@@ -37,17 +37,24 @@
   {
     "type": "enum_with_block",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "field",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -113,29 +120,52 @@
         "required": true,
         "types": [
           {
-            "type": "enum",
-            "named": true
-          },
-          {
             "type": "enum_with_block",
             "named": true
           },
           {
-            "type": "string_or_lkey",
+            "type": "values",
             "named": true
-          },
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "meta_field_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "option",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
           {
             "type": "types",
             "named": true
           }
         ]
       }
-    }
-  },
-  {
-    "type": "option",
-    "named": true,
-    "fields": {},
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -145,15 +175,11 @@
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "meta_field",
           "named": true
         },
         {
-          "type": "types",
+          "type": "option_keyword",
           "named": true
         }
       ]
@@ -176,7 +202,7 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "meta_field",
@@ -188,6 +214,10 @@
         },
         {
           "type": "section",
+          "named": true
+        },
+        {
+          "type": "section_keyword",
           "named": true
         }
       ]
@@ -281,10 +311,6 @@
     "named": false
   },
   {
-    "type": "@",
-    "named": false
-  },
-  {
     "type": "Enum",
     "named": false
   },
@@ -329,12 +355,26 @@
     "named": true
   },
   {
-    "type": "option",
-    "named": false
+    "type": "meta_field_keyword",
+    "named": true
   },
   {
-    "type": "section",
-    "named": false
+    "type": "multi_line_comment",
+    "named": true,
+    "extra": true
+  },
+  {
+    "type": "option_keyword",
+    "named": true
+  },
+  {
+    "type": "section_keyword",
+    "named": true
+  },
+  {
+    "type": "single_line_comment",
+    "named": true,
+    "extra": true
   },
   {
     "type": "string",
